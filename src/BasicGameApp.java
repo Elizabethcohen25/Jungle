@@ -39,11 +39,12 @@ public class BasicGameApp implements Runnable {
    
 	public BufferStrategy bufferStrategy;
 	public Image MonkeyPic;
-
+	public Image jungleBackground;
+	public Image elephantPic;
    //Declare the objects used in the program
    //These are things that are made up of more than one variable type
-	private Monkey astro;
-
+	private Animal monkey;
+	private Animal elephant;
 
    // Main method definition
    // This is the code that runs first and automatically
@@ -63,9 +64,13 @@ public class BasicGameApp implements Runnable {
        
       //variable and objects
       //create (construct) the objects needed for the game and load up 
-		MonkeyPic = Toolkit.getDefaultToolkit().getImage("astronaut.png"); //load the picture
-		Monkey = new Monkey(10,100);
+		MonkeyPic = Toolkit.getDefaultToolkit().getImage("Monkey.png"); //load the picture
+		monkey = new Animal(10,100);
 
+		jungleBackground = Toolkit.getDefaultToolkit().getImage("Jungle Background.jpg");
+
+		elephantPic = Toolkit.getDefaultToolkit().getImage("elephant 2.png");
+		elephant = new Animal(20,150);
 
 	}// BasicGameApp()
 
@@ -92,8 +97,8 @@ public class BasicGameApp implements Runnable {
 	public void moveThings()
 	{
       //calls the move( ) code in the objects
-		Monkey.move();
-
+		monkey.move();
+		elephant.move();
 	}
 	
    //Pauses or sleeps the computer for the amount specified in milliseconds
@@ -143,8 +148,9 @@ public class BasicGameApp implements Runnable {
 		g.clearRect(0, 0, WIDTH, HEIGHT);
 
       //draw the image of the astronaut
-		g.drawImage(MonkeyPic, astro.xpos, astro.ypos, astro.width, astro.height, null);
-
+		g.drawImage(jungleBackground,0,0,1000, 700,null);
+		g.drawImage(MonkeyPic, monkey.xpos, monkey.ypos, monkey.width, monkey.height, null);
+		g.drawImage(elephantPic,elephant.xpos, elephant.ypos, elephant.width,elephant.height, null);
 		g.dispose();
 
 		bufferStrategy.show();
