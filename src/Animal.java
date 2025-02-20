@@ -1,3 +1,5 @@
+import java.awt.*;
+
 /**
  * Created by chales on 11/6/2017.
  */
@@ -13,6 +15,7 @@ public class Animal {
     public int width;
     public int height;
     public boolean isAlive;            //a boolean to denote if the hero is alive or dead.
+    public Rectangle hitbox;
 
 
     // METHOD DEFINITION SECTION
@@ -26,11 +29,12 @@ public class Animal {
     public Animal(int pXpos, int pYpos) {
         xpos = pXpos;
         ypos = pYpos;
-        dx =1;
-        dy =0;
+        dx =5;
+        dy =1;
         width = 60;
         height = 60;
         isAlive = true;
+        hitbox = new Rectangle(xpos, ypos, width, height);
  
     } // constructor
 
@@ -38,8 +42,39 @@ public class Animal {
     public void move() {
         xpos = xpos + dx;
         ypos = ypos + dy;
- 
+
+        if(xpos<=0){
+            dx=-dx;
+        }
+        if(xpos>=1000){
+            dx=-dx;
+        }
+        if(ypos<=0){
+            dy=-dy;
+        }
+        if(ypos>=700) {
+            dy = -dy;
+        }
+        hitbox = new Rectangle(xpos, ypos, width, height);
+
+
     }
+
+    public void wrap(){
+        xpos = xpos + dx;
+        ypos = ypos + dy;
+
+        if (xpos>=1000){
+            xpos=-width;
+        }
+        if(ypos>=700){
+            ypos=-height;
+        }
+        hitbox = new Rectangle(xpos, ypos, width, height);
+
+    }
+
+
 }
 
 

@@ -41,10 +41,12 @@ public class BasicGameApp implements Runnable {
 	public Image MonkeyPic;
 	public Image jungleBackground;
 	public Image elephantPic;
+	public Image iguanaPic;
    //Declare the objects used in the program
    //These are things that are made up of more than one variable type
 	private Animal monkey;
 	private Animal elephant;
+	private Animal iguana;
 
    // Main method definition
    // This is the code that runs first and automatically
@@ -65,12 +67,15 @@ public class BasicGameApp implements Runnable {
       //variable and objects
       //create (construct) the objects needed for the game and load up 
 		MonkeyPic = Toolkit.getDefaultToolkit().getImage("Monkey.png"); //load the picture
-		monkey = new Animal(10,100);
+		monkey = new Animal(800,100);
 
 		jungleBackground = Toolkit.getDefaultToolkit().getImage("Jungle Background.jpg");
 
 		elephantPic = Toolkit.getDefaultToolkit().getImage("elephant 2.png");
 		elephant = new Animal(20,150);
+
+		iguanaPic = Toolkit.getDefaultToolkit().getImage("iguana.png");
+		iguana = new Animal(150,300);
 
 	}// BasicGameApp()
 
@@ -88,6 +93,7 @@ public class BasicGameApp implements Runnable {
 		while (true) {
 
          moveThings();  //move all the game objects
+			crash();
          render();  // paint the graphics
          pause(20); // sleep for 10 ms
 		}
@@ -98,7 +104,20 @@ public class BasicGameApp implements Runnable {
 	{
       //calls the move( ) code in the objects
 		monkey.move();
-		elephant.move();
+		elephant.wrap();
+		iguana.move();
+	}
+
+	public void crash(){
+		if (monkey.hitbox.intersects(iguana.hitbox)== true){
+			monkey.dx=-monkey.dx;
+			iguana.dx=-iguana.dx;
+		}
+		if(iguana.hitbox.intersects(elephant.hitbox)==true){
+			iguana.width=iguana.width+5;
+			elephant.width=iguana.width+8;
+
+		}
 	}
 	
    //Pauses or sleeps the computer for the amount specified in milliseconds
@@ -151,8 +170,51 @@ public class BasicGameApp implements Runnable {
 		g.drawImage(jungleBackground,0,0,1000, 700,null);
 		g.drawImage(MonkeyPic, monkey.xpos, monkey.ypos, monkey.width, monkey.height, null);
 		g.drawImage(elephantPic,elephant.xpos, elephant.ypos, elephant.width,elephant.height, null);
+		g.drawImage(iguanaPic,iguana.xpos, iguana.ypos, iguana.width,iguana.height, null);
+
+		g.setColor(Color.yellow);
+		g.drawRect(elephant.hitbox.x, elephant.hitbox.y, elephant.hitbox.width, elephant.hitbox.height);
+
+
 		g.dispose();
 
 		bufferStrategy.show();
 	}
 }
+
+/*
+
+Aquarium game expectations:
+
+
+Have at least 3 different characters with their own picture
+
+
+
+Have one character move by wrapping. Have one character move by bouncing
+
+
+
+Have at least 2 intersections
+
+
+
+Comments your code so I can understand what is happening
+
+
+
+The variable, class, and method names should be contextual to the project you are making (aka no Astros unless making a space themed game with astronauts)
+
+
+
+
+If the above conditions are met, your grade will be a B+.
+
+
+
+To move into the A-, A, A+ range, add extra spice like more characters, more interactions, lives, or a  win game screen to name a few.
+
+
+Submission: a github link AND video of it working
+
+ */
